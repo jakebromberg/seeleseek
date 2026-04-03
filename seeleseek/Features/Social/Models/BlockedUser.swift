@@ -1,4 +1,5 @@
 import Foundation
+import SeeleseekCore
 
 struct BlockedUser: Identifiable, Codable, Hashable, Sendable {
     var id: String { username }
@@ -6,7 +7,7 @@ struct BlockedUser: Identifiable, Codable, Hashable, Sendable {
     let reason: String?
     let dateBlocked: Date
 
-    init(username: String, reason: String? = nil, dateBlocked: Date = Date()) {
+    nonisolated init(username: String, reason: String? = nil, dateBlocked: Date = Date()) {
         self.username = username
         self.reason = reason
         self.dateBlocked = dateBlocked

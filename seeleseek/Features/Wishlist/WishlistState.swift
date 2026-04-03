@@ -1,5 +1,6 @@
 import SwiftUI
 import os
+import SeeleseekCore
 
 /// Model representing a single wishlist entry
 struct WishlistItem: Identifiable, Hashable, Sendable {
@@ -10,7 +11,7 @@ struct WishlistItem: Identifiable, Hashable, Sendable {
     var lastSearchedAt: Date?
     var resultCount: Int
 
-    init(
+    nonisolated init(
         id: UUID = UUID(),
         query: String,
         createdAt: Date = Date(),

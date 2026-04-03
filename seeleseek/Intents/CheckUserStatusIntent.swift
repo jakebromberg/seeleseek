@@ -1,8 +1,9 @@
 import AppIntents
+import SeeleseekCore
 
 struct CheckUserStatusIntent: AppIntent {
-    static var title: LocalizedStringResource = "Check User Status"
-    static var description = IntentDescription("Check if a SoulSeek user is online, away, or offline.")
+    static let title: LocalizedStringResource = "Check User Status"
+    static let description = IntentDescription("Check if a SoulSeek user is online, away, or offline.")
 
     @Parameter(title: "Username")
     var username: String
@@ -28,5 +29,5 @@ struct CheckUserStatusIntent: AppIntent {
         return .result(value: description)
     }
 
-    static var openAppWhenRun: Bool = false
+    static let openAppWhenRun: Bool = false
 }

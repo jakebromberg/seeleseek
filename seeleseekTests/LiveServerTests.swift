@@ -1,6 +1,7 @@
 import Testing
 import Network
 import Foundation
+@testable import SeeleseekCore
 @testable import seeleseek
 
 /// Live tests against the real SoulSeek server
@@ -153,9 +154,12 @@ struct LiveServerTests {
         let conn = NWConnection(to: endpoint, using: .tcp)
 
         await confirmation("Receive connection") { confirm in
-            await listener.setOnNewConnection { _, _ in
-                print("Received incoming connection!")
-                confirm()
+            Task {
+                for await _ in await listener.newConnections {
+                    print("Received incoming connection!")
+                    confirm()
+                    break
+                }
             }
 
             conn.start(queue: .global())
