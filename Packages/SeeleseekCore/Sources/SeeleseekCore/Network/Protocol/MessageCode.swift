@@ -3,7 +3,7 @@ import Foundation
 // MARK: - Server Message Codes
 // SoulSeek protocol uses the same message codes for different purposes depending on direction.
 // These are organized by their primary use case.
-public enum ServerMessageCode: UInt32 {
+public enum ServerMessageCode: UInt32, Sendable {
     // Authentication & Session
     case login = 1
     case setListenPort = 2
@@ -199,7 +199,7 @@ public enum ServerMessageCode: UInt32 {
 }
 
 // MARK: - Peer Message Codes
-public enum PeerMessageCode: UInt8 {
+public enum PeerMessageCode: UInt8, Sendable {
     case pierceFirewall = 0
     case peerInit = 1
 
@@ -250,7 +250,7 @@ public enum PeerMessageCode: UInt8 {
 // MARK: - SeeleSeek Extension Codes (client-specific, UInt32 range 10000+)
 // These codes are only understood by other SeeleSeek clients.
 // Non-SeeleSeek peers will silently ignore them (unknown code path).
-public enum SeeleSeekPeerCode: UInt32, CaseIterable {
+public enum SeeleSeekPeerCode: UInt32, CaseIterable, Sendable {
     /// Capability handshake — sent after PeerInit to identify SeeleSeek peers.
     /// Payload: uint8 version
     case handshake = 10000
@@ -273,7 +273,7 @@ public enum SeeleSeekPeerCode: UInt32, CaseIterable {
 }
 
 // MARK: - Distributed Message Codes
-public enum DistributedMessageCode: UInt8 {
+public enum DistributedMessageCode: UInt8, Sendable {
     case ping = 0
     case searchRequest = 3
     case branchLevel = 4

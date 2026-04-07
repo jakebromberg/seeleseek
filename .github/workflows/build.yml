@@ -32,5 +32,20 @@ jobs:
       run: sudo xcode-select -s /Applications/Xcode.app
 
     - name: Run Unit Tests
+      timeout-minutes: 15
       run: |
-        xcodebuild -scheme seeleseek -destination 'platform=macOS' test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+        xcodebuild -scheme seeleseek -destination 'platform=macOS' test -enableCodeCoverage YES -resultBundlePath TestResults.xcresult -skip-testing seeleseekTests/LiveServerTests CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+
+    - name: Print Coverage Summary
+      if: always()
+      run: |
+        if [ -d TestResults.xcresult ]; then
+          xcrun xccov view --report TestResults.xcresult | grep -E '^\S' | head -10
+        fi
+
+    - name: Upload Coverage to Codecov
+      if: always()
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        fail_ci_if_error: false
